@@ -29,7 +29,6 @@ jobs:
         working-directory: src
         run: terraform validate
 
-
       - name: Terraform Test
         working-directory: src
-        run: terraform apply -auto-approve
+        run: terraform test
