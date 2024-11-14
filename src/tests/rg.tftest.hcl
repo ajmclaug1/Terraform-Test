@@ -31,12 +31,18 @@ run "vnet_tests" {
     condition     = alltrue([for s in azurerm_virtual_network.bob.address_space : startswith(s, "192.168")])
     error_message = "incorrect address space name"
   }
+
+  assert {
+    condition     = azurerm_virtual_network.bob.dns_servers == tolist(["192.168.1.2"])
+    error_message = "DNS servers are not set to the firewall IP"
+  }
 }
+
 run "failing_tests" {
 
   command = plan
   variables {
-    name = "peter"
+    name = "bob"
   }
 
   expect_failures = [
